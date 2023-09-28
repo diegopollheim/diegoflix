@@ -1,0 +1,33 @@
+{
+  "name": "meus-filmes",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@alptugidin/react-circular-progress-bar": "^1.1.0",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.14.10",
+    "@mui/system": "^5.14.10",
+    "axios": "^1.5.0",
+    "dayjs": "^1.11.10",
+    "dotenv": "^16.3.1",
+    "lucide-react": "^0.279.0",
+    "next": "13.5.3",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "swr": "^2.2.4"
+  },
+  "devDependencies": {
+    "@types/node": "20.7.0",
+    "@types/react": "18.2.22",
+    "eslint": "8.50.0",
+    "eslint-config-next": "13.5.3",
+    "typescript": "5.2.2"
+  }
+}
