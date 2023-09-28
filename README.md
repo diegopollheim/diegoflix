@@ -2,7 +2,7 @@
 
 Projeto para listagem e pesquisa de filmes e séries.
 
-[Link do projeto hospedado (Adicionar link vercel)](https://www.google.com)
+[Link do projeto hospedado](https://diegoflix-ten.vercel.app/)
 
 `ou`
 
