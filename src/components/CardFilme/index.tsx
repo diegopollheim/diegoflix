@@ -3,6 +3,7 @@ import {FilmeModel} from "../../model/filme";
 import dayjs from "dayjs";
 import {NoteFilme} from "./NoteFilme";
 import Link from "next/link";
+import sx from "./style.module.css";
 
 type CardFilmeType = {
   filme: FilmeModel;
@@ -10,7 +11,7 @@ type CardFilmeType = {
 
 export default function CardFilme({filme}: CardFilmeType) {
   return (
-    <Link href={`/filme/details/${filme.id}`}>
+    <Link href={`/filme/details/${filme.id}`} className={sx.card}>
       <Stack
         component={Paper}
         elevation={10}
@@ -20,9 +21,11 @@ export default function CardFilme({filme}: CardFilmeType) {
           width: "100%",
           height: [480, 380],
           cursor: "pointer",
+          overflow: "hidden",
         }}
       >
         <Box
+          className={sx.cardImage}
           sx={{
             height: "100%",
             backgroundImage: `url(https://image.tmdb.org/t/p/original/${filme.image})`,
@@ -34,6 +37,7 @@ export default function CardFilme({filme}: CardFilmeType) {
         />
         <Stack
           mt="auto"
+          bgcolor="#fff"
           alignItems="start"
           px={2}
           py={3}
