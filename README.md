@@ -31,3 +31,15 @@ Para pegar a chave de api é necessário criar uma conta no site `The Movie Data
 ```bash
   npm run dev
 ```
+
+## 📚 Algumas das bibliotecas utilizadas
+
+💻 [MUI - Material UI](https://mui.com/)
+
+🔎 [Lucide - Icons](https://lucide.dev/)
+
+🕒 [Dayjs - Manipulação de datas](https://day.js.org/)
+
+🔄 [SWR - Hook fetch dados (Real Time)](https://swr.vercel.app/)
+
+🌐 [Axios](https://axios-http.com/)
