@@ -18,12 +18,12 @@ export default function FilmeDetails() {
         sx={{
           py: 5,
           backgroundImage: `url(https://image.tmdb.org/t/p/w1920_and_h800_multi_faces/${currentFilme.imageThumb})`,
+          backgroundSize: "cover",
         }}
       >
         <Container sx={{mt: 20}} maxWidth="lg">
           <Stack
             direction={["column", "row"]}
-            height={450}
             sx={{
               columnGap: 3,
             }}
@@ -38,12 +38,12 @@ export default function FilmeDetails() {
             />
 
             <Stack
-              flex={4}
+              flex={3}
               spacing={4}
               sx={{
                 backgroundColor: "#2b2b2ba3",
                 borderRadius: 8,
-                padding: 13,
+                padding: [3, 8],
               }}
             >
               <Stack spacing={1}>
