@@ -1,7 +1,7 @@
-import {Box, Paper, Stack, Typography} from "@mui/material";
-import {FilmeModel} from "../../model/filme";
+import { Box, Paper, Stack, Tooltip, Typography } from "@mui/material";
+import { FilmeModel } from "../../model/filme";
 import dayjs from "dayjs";
-import {NoteFilme} from "./NoteFilme";
+import { NoteFilme } from "./NoteFilme";
 import Link from "next/link";
 import sx from "./style.module.css";
 
@@ -9,7 +9,12 @@ type CardFilmeType = {
   filme: FilmeModel;
 };
 
-export default function CardFilme({filme}: CardFilmeType) {
+export default function CardFilme({ filme }: CardFilmeType) {
+  let titleFilmFormated =
+    filme.title.length > 20
+      ? filme.title
+      : filme.title;
+
   return (
     <Link href={`/filme/details/${filme.id}`} className={sx.card}>
       <Stack
@@ -41,13 +46,24 @@ export default function CardFilme({filme}: CardFilmeType) {
           alignItems="start"
           px={2}
           py={3}
-          sx={{borderTop: "1px solid #646464", position: "relative"}}
+          sx={{ borderTop: "1px solid #646464", position: "relative" }}
         >
           <NoteFilme value={filme.note} />
-          <Typography variant="body1" sx={{fontWeight: "800", fontSize: 18}}>
-            {filme.title}
-          </Typography>
-          <Typography variant="caption" sx={{fontStyle: "italic", fontSize: 14, fontWeight: "300"}}>
+          <Tooltip title={filme.title}>
+            <Typography
+              variant="body1"
+              sx={{
+                fontWeight: "800",
+                fontSize: 18,
+              }}
+            >
+              {titleFilmFormated}
+            </Typography>
+          </Tooltip>
+          <Typography
+            variant="caption"
+            sx={{ fontStyle: "italic", fontSize: 14, fontWeight: "300" }}
+          >
             {dayjs(filme.releaseDate).format("DD [de] MMM [de] YYYY")}
           </Typography>
         </Stack>

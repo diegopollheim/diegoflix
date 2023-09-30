@@ -6,7 +6,8 @@ import {FilmeDetailsModel} from "../../../model/filme";
 
 export default function FilmeDetails() {
   const {query} = useRouter();
-  const {data, isLoading, isValidating} = useSWR(`/api/filmes/details/${query.id}`);
+  const {data, isLoading, isValidating} = useSWR(`${process.env.NEXT_PUBLIC_BASE_URL}/movieDetails/${query.id}`);
+  
   let currentFilme: FilmeDetailsModel = data;
 
   if (!data) return;

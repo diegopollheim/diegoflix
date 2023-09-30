@@ -1,6 +1,6 @@
-import {Box, Paper, Stack, TextField} from "@mui/material";
-import {useContext} from "react";
-import {AppContext} from "../../contexts/AppProvider";
+import { Box, Stack } from "@mui/material";
+import { useContext } from "react";
+import { MoviesContext } from "../../contexts/AppProvider";
 import Image from "next/image";
 import InputSearch from "../InputSearch";
 
@@ -8,8 +8,8 @@ type MenuSuperiorTypes = {
   detailsRoute?: boolean;
 };
 
-export default function MenuSuperior({detailsRoute}: MenuSuperiorTypes) {
-  const {searchMovie, handleChangeQueryMovie} = useContext(AppContext);
+export default function MenuSuperior({ detailsRoute }: MenuSuperiorTypes) {
+  const { searchMovie, handleChangeQueryMovie } = useContext(MoviesContext);
 
   return (
     <Stack
@@ -33,13 +33,21 @@ export default function MenuSuperior({detailsRoute}: MenuSuperiorTypes) {
           display: [`${detailsRoute ? "block" : "none"}`, "block"],
         }}
       >
-        <Image src="/images/logo-header.png" alt="Logo Site" height={50} width={180} />
+        <Image
+          src="/images/logo-header.png"
+          alt="Logo Site"
+          height={50}
+          width={180}
+        />
       </Box>
       {!detailsRoute && (
-        <InputSearch onChange={(e) => handleChangeQueryMovie(e.target.value)} value={searchMovie} />
+        <InputSearch
+          onChange={(e) => handleChangeQueryMovie(e.target.value)}
+          value={searchMovie}
+        />
       )}
 
-      <Box sx={{backgroundColor: "green"}} />
+      <Box sx={{ backgroundColor: "green" }} />
     </Stack>
   );
 }

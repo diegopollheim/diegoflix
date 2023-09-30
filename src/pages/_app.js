@@ -1,6 +1,8 @@
 import {SWRConfig} from "swr";
 import AppProvider from "../contexts/AppProvider";
 import "../styles/globals.css";
+require('dotenv').config()
+
 
 function MyApp({Component, pageProps}) {
   return (
