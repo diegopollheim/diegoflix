@@ -2,28 +2,33 @@ import { createContext, useState } from "react";
 import useSWR from "swr";
 import { FilmeModel } from "../model/filme";
 
-export type AppContenxtTypes = {
+export type MovieContextTypes = {
   searchMovie: string;
   handleChangeQueryMovie: (query: string) => void;
   currentPage: number;
   handleCurrentPage: (page: number) => void;
-  moviesData: {
+  dataMovies: {
     filmes: FilmeModel[];
-    totalPages: number
-  } 
+    totalPages: number;
+  };
 
   isValidating: boolean;
 };
 
-export const AppContext = createContext<AppContenxtTypes | null>(null);
+export const MoviesContext = createContext<MovieContextTypes | null>(null);
 
 export default function AppProvider({ children }) {
   const [searchMovie, setSearchMovie] = useState<string>("");
 
   const [currentPage, setCurrentPage] = useState<number>(1);
 
+  let urlAllMovies = `${process.env.NEXT_PUBLIC_BASE_URL}/allMovies?page=${currentPage}`;
+  let urlAllMoviesSearch = `${process.env.NEXT_PUBLIC_BASE_URL}/allMoviesSearch?page=${currentPage}&search=${searchMovie}`;
   // Busca por filmes total ou com filtro
-  const { data: moviesData, isValidating } = useSWR(`/api/filmes?page=${currentPage}&query=${searchMovie}`);
+
+  const { data: dataMovies, isValidating } = useSWR(
+    searchMovie ? urlAllMoviesSearch : urlAllMovies
+  );
 
   // Atualiza o estado de pesquisa por filme
   const handleChangeQueryMovie = (query: string) => {
@@ -36,10 +41,10 @@ export default function AppProvider({ children }) {
   };
 
   return (
-    <AppContext.Provider
+    <MoviesContext.Provider
       value={{
         isValidating,
-        moviesData,
+        dataMovies,
         currentPage,
         searchMovie,
         handleChangeQueryMovie,
@@ -47,6 +52,6 @@ export default function AppProvider({ children }) {
       }}
     >
       {children}
-    </AppContext.Provider>
+    </MoviesContext.Provider>
   );
 }

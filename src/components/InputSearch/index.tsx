@@ -3,10 +3,10 @@ import sx from "./style.module.css";
 import { Search, X } from "lucide-react";
 import { IconButton } from "@mui/material";
 import { useContext } from "react";
-import { AppContext } from "../../contexts/AppProvider";
+import { MoviesContext } from "../../contexts/AppProvider";
 
 export default function InputSearch({ value, onChange }) {
-  const { handleChangeQueryMovie } = useContext(AppContext);
+  const { handleChangeQueryMovie } = useContext(MoviesContext);
 
   return (
     <Stack
