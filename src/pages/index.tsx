@@ -8,8 +8,8 @@ import {AppContext} from "../contexts/AppProvider";
 import SkeletonCards from "../components/SkeletonCards";
 
 export default function Home() {
-  const {movies, isLoading, totalPages, currentPage, handleCurrentPage} = useContext(AppContext);
-  console.log(isLoading);
+  const {moviesData, isValidating, currentPage, handleCurrentPage} = useContext(AppContext);
+
   return (
     <>
       <MenuSuperior />
@@ -20,23 +20,23 @@ export default function Home() {
           columns={{xs: 2, sm: 8, md: 12, lg: 12}}
           sx={{placeContent: "center"}}
         >
-          {isLoading && !movies ? (
+          {isValidating && !moviesData?.filmes ? (
             <SkeletonCards />
           ) : (
-            movies?.map((film, index) => (
+            moviesData.filmes?.map((film, index) => (
               <Grid item xs={2} sm={3} md={3} key={index}>
                 <CardFilme filme={film} />
               </Grid>
             ))
           )}
         </Grid>
-        {movies?.length ? (
+        {moviesData?.filmes?.length ? (
           <Stack alignItems="center" width="100%" pb={10} pt={5}>
             <Pagination
               className={sx.pagination}
               defaultPage={currentPage}
               color="primary"
-              count={totalPages}
+              count={moviesData.totalPages}
               onChange={(e, pageNumber) => handleCurrentPage(pageNumber)}
             />
           </Stack>

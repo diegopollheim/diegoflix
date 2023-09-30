@@ -6,14 +6,22 @@ type ResponseData = {
   filmes: FilmeModel[];
   totalPages: number;
 };
-
 export default async function FilmesApi(
   req: NextApiRequest,
-  res: NextApiResponse<ResponseData>
+  res: NextApiResponse<ResponseData | string>
 ) {
+
+if (req.method !== 'GET') {
+  res.send(`Method ${req.method} not found!`)
+}
+
+  const { query: searchMovie, page } = req.query;
+
+  let url = searchMovie ? `https://api.themoviedb.org/3/search/movie?query=${searchMovie}&include_adult=false&language=pt-BR&page=${page}`: `https://api.themoviedb.org/3/movie/now_playing?language=pt-BR&page=${req.query.page}`
+
   const options = {
     method: "GET",
-    url: `https://api.themoviedb.org/3/movie/now_playing?language=pt-BR&page=${req.query.page}`,
+    url: url,
     headers: {
       accept: "application/json",
       Authorization: "Bearer " + process.env.API_KEY,
