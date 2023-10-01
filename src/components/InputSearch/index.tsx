@@ -14,10 +14,11 @@ export default function InputSearch({ value, onChange }) {
       direction="row"
       bgcolor="#3f3f46"
       width="100%"
-      maxWidth="400px"
+      maxWidth="250px"
       px={3}
-      py={1}
+      py={0.5}
       borderRadius={10}
+      ml='auto'
     >
       <input
         placeholder="Encontre seu filme..."
