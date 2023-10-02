@@ -42,6 +42,8 @@ export default function CardFilme({ filme }: CardFilmeType) {
         />
 
         <Stack
+          maxHeight={100}
+          justifyContent='center'
           mt="auto"
           bgcolor="#fff"
           alignItems="start"
