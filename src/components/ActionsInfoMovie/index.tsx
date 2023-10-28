@@ -16,11 +16,15 @@ export default function ActionsInfoMovie() {
 }
 
 function ActionBtnAssistir() {
-  const { tooglePlayOrpauseTrailer, playingTrailer }: MovieDetailsTypes =
-    useContext(MovieDetaisContext);
+  const {
+    tooglePlayOrpauseTrailer,
+    playingTrailer,
+    currentFilme,
+  }: MovieDetailsTypes = useContext(MovieDetaisContext);
+
   return (
     <Stack
-      onClick={tooglePlayOrpauseTrailer}
+      onClick={currentFilme?.trailerKey && tooglePlayOrpauseTrailer}
       spacing={2}
       direction="row"
       sx={{
@@ -34,9 +38,13 @@ function ActionBtnAssistir() {
         },
       }}
     >
-      {playingTrailer ? <Pause /> : <Play />}
+      {currentFilme?.trailerKey && <>{playingTrailer ? <Pause /> : <Play />}</>}
 
-      <Typography fontWeight={600}> {playingTrailer ? 'Parar' : 'Assistir Trailer'}</Typography>
+      <Typography fontWeight={600}>
+        {currentFilme?.trailerKey ? (
+          <>{playingTrailer ? "Parar" : "Assistir Trailer"}</>
+        ): 'Trailer não disponível'}
+      </Typography>
     </Stack>
   );
 }

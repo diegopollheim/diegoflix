@@ -10,7 +10,6 @@ type CardFilmeType = {
 };
 
 export default function CardFilme({ filme }: CardFilmeType) {
-  console.log(filme.releaseDate)
   let titleFilmFormated = filme.title.length > 20 ? filme.title : filme.title;
   let imgFilm = filme.image
     ? `https://image.tmdb.org/t/p/original/${filme.image}`

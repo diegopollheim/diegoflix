@@ -11,6 +11,7 @@ import ActionsInfoMovie from "../../../components/ActionsInfoMovie";
 
 export type MovieDetailsTypes = {
   playingTrailer: boolean;
+  currentFilme: FilmeDetailsModel,
   tooglePlayOrpauseTrailer: () => void;
 };
 
@@ -50,20 +51,10 @@ export default function Novo() {
 
   return (
     <MovieDetaisContext.Provider
-      value={{ playingTrailer, tooglePlayOrpauseTrailer }}
+      value={{ playingTrailer, tooglePlayOrpauseTrailer, currentFilme }}
     >
       <MenuSuperior detailsRoute />
-      <button onClick={() => setPlayingTrailer(!playingTrailer)}>toogle</button>
-      <Stack
-        onMouseMove={handleMouseOverCaption}
-        position="relative"
-        sx={{
-          backgroundImage: `url(${imgCapaFilm})`,
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "contain",
-          height: "100vh",
-        }}
-      >
+      <Stack onMouseMove={handleMouseOverCaption} position="relative">
         <Stack
           id="caption-movie"
           bgcolor="#0000008f"
@@ -84,6 +75,7 @@ export default function Novo() {
             <Stack width="38%" spacing={3}>
               <Typography color="#fff" variant="h2">
                 {currentFilme?.title}
+                <Typography ml={1} component='span'>({currentFilme?.year})</Typography>
               </Typography>
               <Typography color="#fff" fontSize={16}>
                 {currentFilme?.sinopse}
