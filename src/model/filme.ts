@@ -12,4 +12,5 @@ export type FilmeDetailsModel = {
   imageCapa: string;
   imageThumb: string;
   year: number;
+  trailerKey: string
 }

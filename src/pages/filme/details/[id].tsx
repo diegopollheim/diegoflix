@@ -1,12 +1,28 @@
+"use client";
+
+import React, { createContext, useEffect, useState } from "react";
+import ReactPlayer from "react-player";
+import { Stack, Typography } from "@mui/material";
 import { useRouter } from "next/router";
-import MenuSuperior from "../../../components/MenuSuperior";
-import { Chip, Container, Stack, Typography } from "@mui/material";
 import useSWR from "swr";
 import { FilmeDetailsModel } from "../../../model/filme";
+import MenuSuperior from "../../../components/MenuSuperior";
+import ActionsInfoMovie from "../../../components/ActionsInfoMovie";
 
-export default function FilmeDetails() {
+export type MovieDetailsTypes = {
+  playingTrailer: boolean;
+  tooglePlayOrpauseTrailer: () => void;
+};
+
+export const MovieDetaisContext = createContext<MovieDetailsTypes | null>(null);
+
+export default function Novo() {
+  const [muted, setMuted] = useState(true);
+  const [playingTrailer, setPlayingTrailer] = useState(false);
+  const [showCaption, setShowCaption] = useState(true);
+
   const { query } = useRouter();
-  const { data, isLoading, isValidating } = useSWR(
+  const { data } = useSWR(
     `${process.env.NEXT_PUBLIC_BASE_URL}/movieDetails/${query.id}`
   );
 
@@ -16,103 +32,84 @@ export default function FilmeDetails() {
     ? `https://image.tmdb.org/t/p/w1920_and_h800_multi_faces/${currentFilme.imageCapa}`
     : "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8ZnVuZG8lMjBjaW5lbWF8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60";
 
-  let imgThumb = currentFilme?.imageThumb
-    ? `https://image.tmdb.org/t/p/w1920_and_h800_multi_faces/${currentFilme.imageCapa}`
-    : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTriI9KbKHFhSHNjSF9QYxPeZF-X7ODqSaGYg&usqp=CAU";
+  const handleMouseOverCaption = () => {
+    if (!showCaption) {
+      setShowCaption(true);
+    }
+    setMuted(false);
+  };
 
-  if (!data) return;
+  const tooglePlayOrpauseTrailer = () => {
+    setPlayingTrailer(!playingTrailer);
+  };
+
+  useEffect(() => {
+   if (showCaption){
+    setTimeout(() => {
+      setShowCaption(false);
+    }, 3000);
+   }
+  }, [showCaption]);
 
   return (
-    <>
+    <MovieDetaisContext.Provider
+      value={{ playingTrailer, tooglePlayOrpauseTrailer }}
+    >
       <MenuSuperior detailsRoute />
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+      <button onClick={() => setPlayingTrailer(!playingTrailer)}>toogle</button>
+      <Stack
+        onMouseMove={handleMouseOverCaption}
+        position="relative"
+        sx={{
+          backgroundImage: `url(${imgCapaFilm})`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "contain",
           height: "100vh",
-          paddingLeft: 15,
-          paddingRight: 15,
         }}
       >
         <Stack
+          id="caption-movie"
+          bgcolor="#0000008f"
+          height="100vh"
+          position="absolute"
+          left={0}
+          right={0}
+          bottom={0}
+          top={0}
+          px={10}
+          justifyContent="center"
           sx={{
-            py: 5,
-            backgroundImage: `url(${imgCapaFilm})`,
-            backgroundSize: "cover",
-            borderRadius: "16px",
-            zIndex: 99,
-            maxHeight: "70%",
+            transition: "all 900ms",
+            opacity: showCaption ? 1 : 0,
           }}
         >
-          <Container maxWidth="lg">
-            <Stack
-              direction={["column", "row"]}
-              sx={{
-                columnGap: 3,
-              }}
-            >
-              <Stack
-                flex={2}
-                sx={{
-                  backgroundImage: `url(${imgThumb})`,
-                  backgroundSize: "contain",
-                  backgroundRepeat: "no-repeat",
-                }}
-              />
-
-              <Stack
-                flex={3}
-                spacing={4}
-                sx={{
-                  backgroundColor: "#2b2b2ba3",
-                  borderRadius: 8,
-                  padding: [3, 8],
-                }}
-              >
-                <Stack
-                  spacing={1}
-                  sx={{
-                    maxHeight: 102,
-                    justifyContent: "center",
-                    padding: 2,
-                  }}
-                >
-                  <Typography
-                    color="#fff"
-                    variant="h4"
-                    sx={{ fontWeight: "700" }}
-                  >
-                    {currentFilme.title}
-                    <Typography color="#fff" component="span" variant="body1">
-                      ({currentFilme.year})
-                    </Typography>
-                  </Typography>
-                  <Chip
-                    size="small"
-                    sx={{ maxWidth: "fit-content" }}
-                    label={`Popularidade - ${currentFilme.popularity}`}
-                    color="success"
-                  />
-                </Stack>
-
-                <Stack spacing={1}>
-                  <Typography
-                    variant="h5"
-                    color="#fff"
-                    sx={{ fontWeight: "700", fontSize: "1.2rem" }}
-                  >
-                    Sinopse
-                  </Typography>
-                  <Typography color="#fff" variant="body1">
-                    {currentFilme.sinopse}
-                  </Typography>
-                </Stack>
-              </Stack>
+          <Stack spacing={3}>
+            <Stack width="38%" spacing={3}>
+              <Typography color="#fff" variant="h2">
+                {currentFilme?.title}
+              </Typography>
+              <Typography color="#fff" fontSize={16}>
+                {currentFilme?.sinopse}
+              </Typography>
             </Stack>
-          </Container>
+            <ActionsInfoMovie />
+          </Stack>
         </Stack>
-      </div>
-    </>
+
+        <ReactPlayer
+          light={!playingTrailer && imgCapaFilm}
+          playing={playingTrailer}
+          playIcon={<></>}
+          loop
+          muted={muted}
+          url={`https://www.youtube.com/watch?v=${currentFilme?.trailerKey}`}
+          width="100%"
+          height="100vh"
+          style={{
+            display: muted ? "none" : "block",
+          }}
+        />
+      </Stack>
+    </MovieDetaisContext.Provider>
   );
 }
