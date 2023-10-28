@@ -17,7 +17,7 @@ export type MovieDetailsTypes = {
 export const MovieDetaisContext = createContext<MovieDetailsTypes | null>(null);
 
 export default function Novo() {
-  const [muted, setMuted] = useState(true);
+  const [muted, setMuted] = useState(false);
   const [playingTrailer, setPlayingTrailer] = useState(false);
   const [showCaption, setShowCaption] = useState(true);
 
@@ -33,10 +33,7 @@ export default function Novo() {
     : "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8ZnVuZG8lMjBjaW5lbWF8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60";
 
   const handleMouseOverCaption = () => {
-    if (!showCaption) {
-      setShowCaption(true);
-    }
-    setMuted(false);
+    setShowCaption(true);
   };
 
   const tooglePlayOrpauseTrailer = () => {
@@ -44,11 +41,11 @@ export default function Novo() {
   };
 
   useEffect(() => {
-   if (showCaption){
-    setTimeout(() => {
-      setShowCaption(false);
-    }, 3000);
-   }
+    if (showCaption) {
+      setTimeout(() => {
+        setShowCaption(false);
+      }, 3000);
+    }
   }, [showCaption]);
 
   return (
@@ -80,7 +77,7 @@ export default function Novo() {
           justifyContent="center"
           sx={{
             transition: "all 900ms",
-            opacity: showCaption ? 1 : 0,
+            opacity: showCaption || !playingTrailer ? 1 : 0,
           }}
         >
           <Stack spacing={3}>

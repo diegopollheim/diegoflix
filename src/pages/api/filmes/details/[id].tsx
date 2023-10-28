@@ -26,6 +26,7 @@ export default async function FilmesApi(
       imageCapa: response.data.poster_path,
       imageThumb: response.data.backdrop_path,
       year: parseInt(dayjs(response.data.release_date).format("YYYY")),
+      trailerKey: ''
     };
 
     res.status(200).json(retorno);

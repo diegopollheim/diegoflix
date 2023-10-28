@@ -36,7 +36,7 @@ function ActionBtnAssistir() {
     >
       {playingTrailer ? <Pause /> : <Play />}
 
-      <Typography fontWeight={600}> {playingTrailer ? 'Pausar' : 'Assistir Trailer'}</Typography>
+      <Typography fontWeight={600}> {playingTrailer ? 'Parar' : 'Assistir Trailer'}</Typography>
     </Stack>
   );
 }
