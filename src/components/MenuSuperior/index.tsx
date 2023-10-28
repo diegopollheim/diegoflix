@@ -19,8 +19,8 @@ export default function MenuSuperior({ detailsRoute }: MenuSuperiorTypes) {
       height="100px"
       direction="row"
       alignItems="center"
-      justifyContent="space-around"
-      bgcolor="#121214"
+      justifyContent="space-between"
+      bgcolor="#0D0D0D"
       px={2}
       zIndex={99}
     >
@@ -36,8 +36,8 @@ export default function MenuSuperior({ detailsRoute }: MenuSuperiorTypes) {
         <Image
           src="/images/logo-header.png"
           alt="Logo Site"
-          height={50}
-          width={180}
+          height={45}
+          width={140}
         />
       </Box>
       {!detailsRoute && (
