@@ -64,7 +64,7 @@ export default function Novo() {
           right={0}
           bottom={0}
           top={0}
-          px={10}
+          px={[2,2,10]}
           justifyContent="center"
           sx={{
             transition: "all 900ms",
@@ -72,8 +72,8 @@ export default function Novo() {
           }}
         >
           <Stack spacing={3}>
-            <Stack width="38%" spacing={3}>
-              <Typography color="#fff" variant="h2">
+            <Stack width={["100%","68%", "38%"]} spacing={3}>
+              <Typography color="#fff" variant="h2" fontSize={['2rem', '2.875rem', '3.875rem']}>
                 {currentFilme?.title}
                 <Typography ml={1} component='span'>({currentFilme?.year})</Typography>
               </Typography>
